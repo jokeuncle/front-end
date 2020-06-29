@@ -3,11 +3,8 @@
  * (c) 2018-2020 Lei Qian
  * Released under the MIT License.
  */
-(function (global, factory) {
-  typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports) :
-  typeof define === 'function' && define.amd ? define(['exports'], factory) :
-  (global = global || self, factory(global.FrontEnd = {}));
-}(this, (function (exports) { 'use strict';
+var FrontEnd = (function (exports) {
+  'use strict';
 
   var toLowerCase = function (s) { return String(s || '').toLowerCase(); };
   var toUpperCase = function (s) { return String(s || '').toUpperCase(); };
@@ -155,6 +152,7 @@
   exports.toLowerCase = toLowerCase;
   exports.toUpperCase = toUpperCase;
 
-  Object.defineProperty(exports, '__esModule', { value: true });
+  return exports;
 
-})));
+}({}));
+//# sourceMappingURL=FrontEnd.dev.js.map

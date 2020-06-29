@@ -13,13 +13,17 @@
     "commitizen": "^4.1.2",
     "cz-conventional-changelog": "^3.2.0",
     "rollup": "^2.18.1",
-    "rollup-plugin-terser": "^6.1.0"
+    "rollup-plugin-clear": "^2.0.7",
+    "rollup-plugin-terser": "^6.1.0",
+    "terser": "^4.8.0"
   },
   "scripts": {
-    "dev:dev": "rollup -w -c scripts/config.js --environment TARGET:def-dev",
-    "dev:prod": "rollup -w -c scripts/config.js --environment TARGET:def-prod",
-    "build": "node scripts/build.js",
+    "dev": "rollup -w -c scripts/config.js --environment TARGET:dev",
+    "build": "node scripts/build.js FrontEnd.min",
     "cm": "git-cz"
+  },
+  "gitHooks": {
+    "pre-commit": "lint-staged"
   },
   "repository": {
     "type": "git",

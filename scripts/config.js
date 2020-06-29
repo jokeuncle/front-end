@@ -1,10 +1,11 @@
 const path = require('path');
 const alias = require('@rollup/plugin-alias');
-const flow = require('@rollup/plugin-sucrase');
 const replace = require('@rollup/plugin-replace');
 const buble = require('@rollup/plugin-buble');
-const resolve = require('@rollup/plugin-node-resolve').default;
-const terser = require('rollup-plugin-terser').terser;
+// const resolve = require('@rollup/plugin-node-resolve').default;
+// const terser = require('rollup-plugin-terser').terser;
+// const clear = require('rollup-plugin-clear');
+// const flow = require('@rollup/plugin-sucrase');
 
 const version = process.env.VERSION || require('../package.json').version;
 
@@ -27,21 +28,21 @@ const _resolve = p => {
 };
 
 const builds = {
-  'def-dev': {
+  'dev': {
     entry: _resolve('index.js'),
-    dest: _resolve('dist/FrontEnd.js'),
-    format: 'umd',
+    dest: _resolve('dist/FrontEnd.dev.js'),
+    format: 'iife',
     env: 'development',
-    banner
-  },
-  'def-prod': {
-    entry: _resolve('index.js'),
-    dest: _resolve('dist/FrontEnd.min.js'),
-    format: 'umd',
-    env: 'production',
     banner,
-    plugins: [terser()]
-  }
+		sourcemap: true
+  },
+	'prod': {
+		entry: _resolve('index.js'),
+		dest: _resolve('dist/FrontEnd.min.js'),
+		format: 'iife',
+		env: 'production',
+		banner,
+	}
 };
 
 function getConfig(name) {
@@ -52,15 +53,20 @@ function getConfig(name) {
       file: opts.dest,
       format: opts.format,
       banner: opts.banner,
-      name: opts.moduleName || 'FrontEnd'
+      name: opts.moduleName || 'FrontEnd',
+			sourcemap: opts.sourcemap || false
     },
     external: opts.external,
     plugins: [
       // flow(),
+			// clear({
+			// 	targets: ['dist'],
+			// 	watch: true
+			// }),
       alias({
         entries: Object.assign({}, aliases, opts.alias)
       }),
-      resolve()
+      // resolve()
     ].concat(opts.plugins || [])
   };
 
@@ -85,5 +91,5 @@ if(process.env.TARGET) {
   module.exports = getConfig(process.env.TARGET);
 }else {
   exports.getBuild = getConfig;
-  exports.getAllBuilds = Object.keys(builds).map(getConfig);
+  exports.getAllBuilds = () => Object.keys(builds).map(getConfig);
 }
