@@ -5,6 +5,7 @@ const { devicePixelRatio } = window;
 const { width, height } = window.screen;
 
 // specific platform
+export const isInBrowser = typeof window !== 'undefined';
 export const isApple = (/iPhone|iPad|iPod|Macintosh/i).test(userAgent);
 export const isAndroid = (/Android/i).test(userAgent);
 export const isWeiXin = (/MicroMessenger/i).test(userAgent);
