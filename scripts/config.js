@@ -2,6 +2,7 @@ const path = require('path');
 const alias = require('@rollup/plugin-alias');
 const replace = require('@rollup/plugin-replace');
 const buble = require('@rollup/plugin-buble');
+const size = require('rollup-plugin-sizes');
 // const resolve = require('@rollup/plugin-node-resolve').default;
 // const terser = require('rollup-plugin-terser').terser;
 // const clear = require('rollup-plugin-clear');
@@ -34,7 +35,7 @@ const builds = {
     format: 'iife',
     env: 'development',
     banner,
-		sourcemap: true
+		sourcemap: true,
   },
 	'prod': {
 		entry: _resolve('index.js'),
@@ -66,6 +67,7 @@ function getConfig(name) {
       alias({
         entries: Object.assign({}, aliases, opts.alias)
       }),
+			size(),
       // resolve()
     ].concat(opts.plugins || [])
   };
